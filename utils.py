@@ -1,16 +1,26 @@
-from pathlib import Path #Para trabajar con las rutas
+from pathlib import Path 
 import numpy as np 
-from PIL import Image #Para trabajar con imagenes 
+from PIL import Image 
 
-#Esta función corta las imagenes con un path determinado
+
 def crop_with_margin(image: np.ndarray, box: np.ndarray, margin: int = 5) -> np.ndarray:
-    x1, y1, x2, y2 = box.astype(int) #Coordenadas que se recortarán
+    """ Recorta imágenes por un recuadro aumentando un margen
+
+    Args:
+        image (np.ndarray): array de la imagen
+        box (np.ndarray[int]): coordenadas de la caja para el recorte
+        margin (int): tamaño en pixeles del margen alredor de la caja
+
+    Returns:
+        np.ndarray: array de la imagen recortada
+    """
+    x1, y1, x2, y2 = box.astype(int)
     height, width, _ = image.shape
     x1 = max(0, x1 - margin)
     y1 = max(0, y1 - margin)
     x2 = min(width, x2 + margin)
     y2 = min(height, y2 + margin)
-    return image[y1:y2, x1:x2] #Regresa la imagen recortada
+    return image[y1:y2, x1:x2]
 
 
 #Esta función es la que procesará la imagen, es decir,
